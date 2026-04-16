@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 import random
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,7 +16,10 @@ app.add_middleware(
 )
 
 # 🔥 ================== API KEY ==================
-API_KEY = os.getenv("API_KEY")   # ❗ LINE 16 → PUT YOUR KEY HERE
+API_KEY = os.getenv("API_KEY")
+
+# 🔥 QUEUE STORAGE (Simple Simulation)
+task_queue = []
 
 # ---------- DATA ----------
 
@@ -35,9 +38,6 @@ def get_weather(city="Chennai"):
     try:
         url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
         response = requests.get(url)
-
-        print("STATUS:", response.status_code)   # 🔥 DEBUG
-        print("RAW:", response.text)             # 🔥 DEBUG
 
         data = response.json()
 
@@ -113,6 +113,13 @@ def generate_shipment():
         "delay_predicted": delay
     }
 
+# ---------- QUEUE TASK ----------
+
+def process_shipment_task():
+    shipment = generate_shipment()
+    task_queue.append(shipment["id"])
+    print("🚀 Processing shipment in background:", shipment["id"])
+
 # ---------- AI AGENT ----------
 
 def perceive():
@@ -151,8 +158,16 @@ def home():
     return {"message": "SupplyPulse AI Backend Running 🚀"}
 
 @app.get("/overview")
-def overview():
-    shipments = [generate_shipment() for _ in range(5)]
+def overview(background_tasks: BackgroundTasks):
+
+    shipments = []
+
+    for _ in range(5):
+        shipment = generate_shipment()
+        shipments.append(shipment)
+
+        # 🔥 Add to queue
+        background_tasks.add_task(process_shipment_task)
 
     return {
         "total_shipments": len(shipments),
@@ -174,18 +189,25 @@ def ai_dashboard():
 @app.get("/operations")
 def operations():
     return {
-        "queue": random.randint(1, 10),
+        "queue": len(task_queue),
         "logs": [
-            f"{datetime.now().strftime('%H:%M:%S')} | Delay detected",
             f"{datetime.now().strftime('%H:%M:%S')} | Task queued",
-            f"{datetime.now().strftime('%H:%M:%S')} | Processing",
-            f"{datetime.now().strftime('%H:%M:%S')} | Reroute completed"
+            f"{datetime.now().strftime('%H:%M:%S')} | Processing background jobs",
+            f"{datetime.now().strftime('%H:%M:%S')} | Queue size: {len(task_queue)}"
         ]
     }
 
 @app.get("/alerts")
-def alerts():
-    shipments = [generate_shipment() for _ in range(8)]
+def alerts(background_tasks: BackgroundTasks):
+
+    shipments = []
+
+    for _ in range(8):
+        shipment = generate_shipment()
+        shipments.append(shipment)
+
+        # 🔥 Add to queue
+        background_tasks.add_task(process_shipment_task)
 
     return [
         {
