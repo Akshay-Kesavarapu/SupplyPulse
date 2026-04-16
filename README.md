@@ -186,3 +186,13 @@ docker-compose up --build
 SupplyPulse transforms traditional supply chains into **intelligent, data-driven ecosystems**, enabling faster decisions and reducing operational risks.
 
 ---
+
+## updated pic of the project dashbord
+
+
+<img width="1600" height="822" alt="PHOTO-2026-04-16-17-12-59" src="https://github.com/user-attachments/assets/9af99e39-c863-46c5-95a0-fa00e7a3df69" />
+<img width="1600" height="828" alt="PHOTO-2026-04-16-17-13-39" src="https://github.com/user-attachments/assets/52b7749d-1f47-4b8b-b71e-a75a960fbc27" />
+<img width="1600" height="819" alt="PHOTO-2026-04-16-17-13-18" src="https://github.com/user-attachments/assets/b90f41c7-ccc2-45c4-b4a9-640e9d719879" />
+<img width="1600" height="825" alt="PHOTO-2026-04-16-17-12-38" src="https://github.com/user-attachments/assets/56458f02-1a94-4870-83b0-45a5119c085d" />
+
+
