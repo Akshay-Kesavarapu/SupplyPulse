@@ -16,7 +16,7 @@ app.add_middleware(
 )
 
 # 🔥 ================== API KEY ==================
-API_KEY = os.getenv("d96a787a0b32bc 9e86204ba85b7cd95d")   # ❗ LINE 16 → PUT YOUR KEY HERE
+API_KEY = os.getenv("API_KEY")   # ❗ LINE 16 → PUT YOUR KEY HERE
 
 # ---------- DATA ----------
 
