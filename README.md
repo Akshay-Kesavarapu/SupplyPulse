@@ -1,4 +1,4 @@
-SupplyPulse – AI-Powered Supply Chain Control Tower
+*SupplyPulse – AI-Powered Supply Chain Control Tower*
 
 ## 🧠 Problem Statement
 
